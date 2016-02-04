@@ -24,6 +24,9 @@ script:
   # First run
   - ansible-playbook tests/main.yml
 
+  # Travis CI's environment requires one _extra_ run for true idempotence :-/.
+  - ansible-playbook tests/main.yml
+
   # Second run Idempotence test
   - >
     ansible-playbook tests/main.yml --connection=local --sudo
