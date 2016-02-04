@@ -1,0 +1,15 @@
+galaxy_info:
+  author: wangsha
+  description: |
+    Ansible role to manage and run the redis docker container.
+  license: MIT
+  min_ansible_version: 1.0
+  platforms:
+    - name: Ubuntu
+      versions:
+       - trusty
+  galaxy_tags:
+    - docker
+    - ubuntu
+    - redis
+dependencies: []
