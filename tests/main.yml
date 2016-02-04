@@ -1,7 +1,5 @@
 ---
 - hosts: 'localhost'
-  vars:
-    docker_api_version: 1.20
   roles:
     - role: 'docker-redis'
       become: true
