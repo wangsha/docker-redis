@@ -15,8 +15,6 @@
 
 - name: Configure redis
   template: src=redis.conf.j2 dest={{ docker_redis_conf }} mode='0644'
-  notify:
-   - 'restart-docker-redis'
 
 - name: Run docker redis container
   become: true
