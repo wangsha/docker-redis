@@ -13,14 +13,11 @@ before_install:
 
 install:
   - sudo pip install ansible>=2.0.0.2
-  - sudo pip install docker-py==1.6.0
+  - sudo pip install docker-py<=1.4.0
   - echo -e 'localhost  ansible_connection=local' > tests/inventory
   - echo -e '[defaults]\nroles_path = ../\nhostfile = ./tests/inventory' > ansible.cfg
 
 script:
-  - docker -v
-  - docker-machine -v
-  
   # Check syntax
   - ansible-playbook --syntax-check tests/main.yml
   - ansible-playbook -v --diff tests/main.yml
