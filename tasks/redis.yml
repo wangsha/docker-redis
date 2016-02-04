@@ -1,0 +1,36 @@
+
+- name: Ensure redis data/conf/log directories exist
+  become: true
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: 0755
+  with_items:
+    - "{{ docker_redis_data_dir }}"
+    - "{{ docker_redis_conf_dir }}"
+    - "{{ docker_redis_log_dir }}"
+  tags:
+    - install
+    - upgrade
+
+- name: Configure redis
+  template: src=redis.conf.j2 dest={{ docker_redis_conf }} mode='0644'
+  notify:
+   - 'restart-docker-redis'
+
+- name: Run docker redis container
+  become: true
+  docker:
+    env: "{{ docker_redis_env }}"
+    name: "{{ docker_redis_name }}"
+    image: "{{ docker_redis_image }}"
+    command: "{{ docker_redis_command }}"
+    ports: "{{ docker_redis_ports }}"
+    expose: "{{ docker_redis_expose }}"
+    restart_policy: "always"
+    state: "reloaded"
+    volumes: "{{ docker_redis_volumns }}"
+  tags:
+    - install
+    - upgrade
+

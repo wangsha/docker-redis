@@ -1,0 +1,30 @@
+---
+language: python
+python: "2.7"
+sudo: required
+dist: trusty
+
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq python-apt python-pycurl
+
+install:
+  - sudo pip install http://releases.ansible.com/ansible/ansible-2.0.0-0.4.beta2.tar.gz
+  - sudo pip install docker-py
+  - echo -e 'localhost  ansible_connection=local' > tests/inventory
+  - echo -e '[defaults]\nroles_path = ../\nhostfile = ./tests/inventory' > ansible.cfg
+
+script:
+
+  # Check syntax
+  - ansible-playbook --syntax-check tests/main.yml
+
+  # First run
+  - ansible-playbook tests/main.yml
+
+  # Second run Idempotence test
+  - >
+    ansible-playbook test/main.yml --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
