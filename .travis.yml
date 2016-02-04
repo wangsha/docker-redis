@@ -12,13 +12,12 @@ before_install:
  - sudo apt-get install -qq python-apt python-pycurl
 
 install:
-  - sudo pip install http://releases.ansible.com/ansible/ansible-2.0.0-0.4.beta2.tar.gz
+  - sudo pip install ansible>=2.0.0.2
   - sudo pip install docker-py
   - echo -e 'localhost  ansible_connection=local' > tests/inventory
   - echo -e '[defaults]\nroles_path = ../\nhostfile = ./tests/inventory' > ansible.cfg
 
 script:
-  - docker ps
   # Check syntax
   - ansible-playbook --syntax-check tests/main.yml
   - ansible-playbook -v --diff tests/main.yml
