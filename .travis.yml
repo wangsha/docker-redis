@@ -18,10 +18,10 @@ install:
   - echo -e '[defaults]\nroles_path = ../\nhostfile = ./tests/inventory' > ansible.cfg
 
 script:
-
+  - docker ps
   # Check syntax
   - ansible-playbook --syntax-check tests/main.yml
-  - ansible-playbook -v --diff tests/mail.yml
+  - ansible-playbook -v --diff tests/main.yml
 
   # First run
   - ansible-playbook tests/main.yml
