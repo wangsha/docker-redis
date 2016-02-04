@@ -3,6 +3,7 @@
 - name: 'restart-docker-redis'
   become: true
   docker:
+    docker_api_version: "{{ docker_api_version }}"
     env: "{{ docker_redis_env }}"
     name: "{{ docker_redis_name }}"
     image: "{{ docker_redis_image }}"

@@ -32,6 +32,7 @@ redis_appendfilename: appendonly.aof
 redis_appendfsync: everysec
 
 # Docker configuration
+docker_api_version: 1.21
 docker_redis_image: redis:latest
 docker_redis_name: redis_1
 docker_redis_data_dir: "/opt/redis/{{ docker_redis_name }}/data"
