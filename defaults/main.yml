@@ -45,7 +45,7 @@ docker_redis_expose:
 docker_redis_ports:
   - 6379:6379
 docker_redis_env: {}
-docker_redis_volumns:
+docker_redis_volumes:
   - "{{ docker_redis_data_dir }}:{{ redis_db_dir }}:rw"
   - "{{ docker_redis_conf }}:{{ redis_conf }}:rw"
   - "{{ docker_redis_log_dir }}/redis.log:{{ redis_logfile }}:rw"

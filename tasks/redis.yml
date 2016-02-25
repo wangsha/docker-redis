@@ -24,6 +24,7 @@
     name: "{{ docker_redis_name }}"
     image: "{{ docker_redis_image }}"
     command: "{{ docker_redis_command }}"
+    volumes: "{{ docker_redis_volumes }}"
     ports: "{{ docker_redis_ports }}"
     expose: "{{ docker_redis_expose }}"
     restart_policy: "always"
