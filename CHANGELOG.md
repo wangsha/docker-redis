@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.2](https://github.com/wangsha/docker-redis/tree/1.2) (2016-02-26)
+[Full Changelog](https://github.com/wangsha/docker-redis/compare/1.1...1.2)
+
 ## [1.1](https://github.com/wangsha/docker-redis/tree/1.1) (2016-02-04)
 [Full Changelog](https://github.com/wangsha/docker-redis/compare/1.0...1.1)
 
