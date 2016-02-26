@@ -29,7 +29,7 @@
     expose: "{{ docker_redis_expose }}"
     restart_policy: "always"
     state: "reloaded"
-    volumes: "{{ docker_redis_volumns }}"
+    volumes: "{{ docker_redis_volumes }}"
   tags:
     - install
     - upgrade
