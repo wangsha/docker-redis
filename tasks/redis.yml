@@ -26,6 +26,8 @@
     command: "{{ docker_redis_command }}"
     volumes: "{{ docker_redis_volumes }}"
     ports: "{{ docker_redis_ports }}"
+    log_driver: "{{ docker_redis_log_driver }}"
+    log_opt: "{{ docker_redis_log_opt }}"
     expose: "{{ docker_redis_expose }}"
     restart_policy: "always"
     state: "reloaded"

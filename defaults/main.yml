@@ -34,10 +34,9 @@ redis_appendfsync: everysec
 # Docker configuration
 docker_api_version: 1.21
 docker_redis_image: redis:latest
-docker_redis_name: redis_1
+docker_redis_name: redis
 docker_redis_data_dir: "/opt/redis/{{ docker_redis_name }}/data"
 docker_redis_conf_dir: "/opt/redis/{{ docker_redis_name }}/conf"
-docker_redis_log_dir: "/opt/redis/{{ docker_redis_name }}/log"
 docker_redis_conf: "{{ docker_redis_conf_dir }}/redis.conf"
 docker_redis_command: "redis-server"
 docker_redis_expose:
@@ -48,4 +47,7 @@ docker_redis_env: {}
 docker_redis_volumes:
   - "{{ docker_redis_data_dir }}:{{ redis_db_dir }}:rw"
   - "{{ docker_redis_conf }}:{{ redis_conf }}:rw"
-  - "{{ docker_redis_log_dir }}/redis.log:{{ redis_logfile }}:rw"
+docker_redis_log_driver: syslog
+docker_redis_log_opt:
+  syslog-facility: local0
+  syslog-tag: graphite
