@@ -2,6 +2,7 @@ docker-redis
 ============
 
 [![Build Status](https://travis-ci.org/wangsha/docker-redis.svg?branch=master)](https://travis-ci.org/wangsha/docker-redis)
+[![Ansible Galaxy](https://img.shields.io/badge/AnsibleGalaxy-wangsha.docker--redis-blue.svg)](https://galaxy.ansible.com/wangsha/docker-redis/)
 
 Ansible role to manage and run the redis docker container.
 
@@ -37,15 +38,15 @@ role.
 
 Custom volume mappings
 ----------------------
-Docker allows you to mount a host directory or a host file as [data volume](https://docs.docker.com/engine/userguide/containers/dockervolumes/).
-In this role, we mount host directories to persist container data and host files to configure container behavior.
+Docker allows mounting a host directory or a host file as [data volume](https://docs.docker.com/engine/userguide/containers/dockervolumes/).
+This role mounts host directories to persist container data and host files to configure container behavior.
 `docker_redis_directory_volumes` and `docker_redis_file_volumes` are the two variables to control volume mappings.
 If you wish to customize the mapping, please follow `<host directory>:<container directory>:<mapping mode>` format
  to ensure host directories are correctly created before launching containers.
  
 To customize host file mappings, update `docker_redis_file_volumes`. 
 This role will automatically create file parent directories and copy the template 
-to host machine. The naming convention for template is `<host_file_name>.<host_file_extension>.j2'.
+to host machine. The naming convention for template is `<host_file_name>.<host_file_extension>.j2`.
 To copy template from your own ansible diretories, set `docker_redis_template_path`.
 
 Example Config:
@@ -53,7 +54,7 @@ Example Config:
 docker_redis_file_volumes:
   - '/opt/myapp/conf/settings.conf:/etc/myapp/conf/settings.conf:ro'
 docker_redis_template_path: /path/to/ansible/project/templates
-# make sure file /path/to/ansible/project/templates/settings.conf.js exists. 
+# make sure file /path/to/ansible/project/templates/settings.conf.j2 exists. 
 ```
 
 
