@@ -1,30 +1,43 @@
-
-- name: Ensure redis data/conf/log directories exist
-  become: true
+- name: Ensure docke volume mapping host directories exist
   file:
     state: directory
-    path: "{{ item }}"
-    mode: 0755
+    path: "{{ item | regex_replace('^(?P<host>.+):(?P<container>.+):(?P<mode>.+)', '\\g<host>') }}"
   with_items:
-    - "{{ docker_redis_data_dir }}"
-    - "{{ docker_redis_conf_dir }}"
-    - "{{ docker_redis_log_dir }}"
+    - "{{ docker_redis_directory_volumes }}"
   tags:
     - install
     - upgrade
 
-- name: Configure redis
-  template: src=redis.conf.j2 dest={{ docker_redis_conf }} mode='0644'
+
+- name: Ensure docker volume mapping host file directories exist
+  file:
+    state: directory
+    path: "{{ item | regex_replace('^(?P<host>.+):(?P<container>.+):(?P<mode>.+)', '\\g<host>') | dirname }}"
+  with_items:
+    - "{{ docker_redis_file_volumes }}"
+  tags:
+    - install
+    - upgrade
+
+- name: Copy docker volume mapping host file
+  template:
+    src="{{ docker_redis_template_path }}{{ item | regex_replace('^(?P<host>.+):(?P<container>.+):(?P<mode>.+)', '\\g<host>') | basename }}.j2"
+    dest="{{ item | regex_replace('^(?P<host>.+):(?P<container>.+):(?P<mode>.+)', '\\g<host>') }}"
+    mode='0644'
+  with_items:
+    - "{{ docker_redis_file_volumes }}"
+  tags:
+    - install
+    - upgrade
 
 - name: Run docker redis container
-  become: true
   docker:
     docker_api_version: "{{ docker_api_version }}"
     env: "{{ docker_redis_env }}"
     name: "{{ docker_redis_name }}"
     image: "{{ docker_redis_image }}"
     command: "{{ docker_redis_command }}"
-    volumes: "{{ docker_redis_volumes }}"
+    volumes: "{{ docker_redis_volumes1 }}"
     ports: "{{ docker_redis_ports }}"
     expose: "{{ docker_redis_expose }}"
     restart_policy: "always"
