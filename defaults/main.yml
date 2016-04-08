@@ -5,6 +5,7 @@ docker_redis_image: redis:latest
 docker_redis_name: redis
 docker_redis_data_dir: "/opt/redis/{{ docker_redis_name }}/data"
 docker_redis_command: "redis-server"
+docker_redis_memory_limit: 512MB
 docker_redis_expose:
   - 6379
 docker_redis_ports:
