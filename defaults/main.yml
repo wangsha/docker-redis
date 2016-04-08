@@ -1,55 +1,22 @@
 ---
-
-# Setup redis role
-redis_role: master
-
-# If role is slave set these values too
-redis_master_ip: 1.1.1.1
-redis_master_port: 6379
-redis_master_auth: None
-
-# Setup redis options
-redis_bind: "127.0.0.1"
-redis_port: 6379
-redis_syslog_enabled: "yes"
-redis_databases: 4
-redis_database_save_times:
-  - [900, 1]
-  - [300, 10]
-  - [60, 10000]
-redis_dbfilename: dump.rdb
-redis_db_dir: /var/lib/redis
-redis_logfile: /var/log/redis/redis-server.log
-redis_conf: /etc/redis/redis.conf
-redis_requirepass: false
-redis_pass: None
-redis_max_clients: 128
-redis_max_memory: 512mb
-redis_maxmemory_policy: volatile-lru
-redis_appendonly: no
-redis_appendfilename: appendonly.aof
-redis_appendfsync: everysec
-
 # Docker configuration
 docker_api_version: 1.21
 docker_redis_image: redis:latest
 docker_redis_name: redis
 docker_redis_data_dir: "/opt/redis/{{ docker_redis_name }}/data"
-docker_redis_host_conf_file: "/opt/redis/{{ docker_redis_name }}/conf/redis.conf"
-docker_redis_container_conf_file: "/usr/local/etc/redis/redis.conf"
-docker_redis_command: "redis-server {{ docker_redis_container_conf_file }}"
+docker_redis_command: "redis-server"
 docker_redis_expose:
   - 6379
 docker_redis_ports:
   - 6379:6379
 docker_redis_env: {}
 docker_redis_directory_volumes:
-  - "{{ docker_redis_data_dir }}:{{ redis_db_dir }}:rw"
-docker_redis_file_volumes:
-  - "{{ docker_redis_host_conf_file }}:{{ docker_redis_container_conf_file }}:ro"
+  - "{{ docker_redis_data_dir }}:/data:rw"
+docker_redis_file_volumes: []
 docker_redis_template_path: ""
 docker_redis_volumes: "{{ docker_redis_directory_volumes + docker_redis_file_volumes }}"
 docker_redis_log_driver: syslog
 docker_redis_log_opt:
   syslog-facility: local0
   syslog-tag: "{{ docker_redis_name }}"
+
