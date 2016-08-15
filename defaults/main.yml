@@ -19,5 +19,5 @@ docker_redis_volumes: "{{ docker_redis_directory_volumes + docker_redis_file_vol
 docker_redis_log_driver: syslog
 docker_redis_log_opt:
   syslog-facility: local0
-  syslog-tag: "{{ docker_redis_name }}"
+  tag: "{{ docker_redis_name }}"
 
